@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>J. Piper Consulting LLC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --parchment: #EDE6D6;
+    --bark: #3A2E1E;
+    --moss: #3D5040;
+    --moss-light: #5A7060;
+    --lichen: #8FA888;
+    --gold: #B8923A;
+    --gold-light: #D4A84B;
+    --stone: #7A7268;
+    --white: #FDFAF5;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--bark);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 4rem;
+    background: transparent;
+    transition: background 0.4s, backdrop-filter 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(245, 240, 232, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(58,46,30,0.08);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--bark);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--bark);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8rem 4rem 6rem;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 2.5rem;
+    height: 1px;
+    background: var(--gold);
+  }
+  .hero-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--bark);
+    margin-bottom: 2rem;
+  }
+  .hero-heading em {
+    font-style: italic;
+    color: var(--moss);
+  }
+  .hero-sub {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--stone);
+    max-width: 38ch;
+    margin-bottom: 3rem;
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--bark);
+    padding: 1rem 2rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+    width: fit-content;
+  }
+  .hero-cta:hover { background: var(--moss); transform: translateY(-1px); }
+  .hero-cta-arrow { font-size: 1rem; transition: transform 0.2s; }
+  .hero-cta:hover .hero-cta-arrow { transform: translateX(4px); }
+
+  .hero-right {
+    background: var(--moss);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-right-inner {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 60%, rgba(90,112,96,0.6) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(184,146,58,0.15) 0%, transparent 50%);
+  }
+  .hero-texture {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image: repeating-linear-gradient(
+      45deg,
+      #fff 0px, #fff 1px,
+      transparent 1px, transparent 12px
+    );
+  }
+  .hero-right-text {
+    position: absolute;
+    bottom: 6rem;
+    left: 4rem;
+    right: 4rem;
+  }
+  .hero-right-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(253,250,245,0.9);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .hero-right-attr {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+  }
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--stone);
+    animation: nudge 2s ease-in-out infinite;
+  }
+  .hero-scroll-line {
+    width: 1px;
+    height: 2.5rem;
+    background: var(--stone);
+    opacity: 0.4;
+  }
+  @keyframes nudge {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+
+  /* DIVIDER */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 4rem;
+    margin: 5rem 0 0;
+  }
+  .divider-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(184,146,58,0.5), transparent);
+  }
+
+  /* SERVICES */
+  .services {
+    padding: 4rem 4rem 8rem;
+  }
+  .services-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 5rem;
+    align-items: end;
+  }
+  .services-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--bark);
+  }
+  .services-title em { font-style: italic; color: var(--moss); }
+  .services-intro {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--stone);
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: rgba(58,46,30,0.1);
+    border: 1px solid rgba(58,46,30,0.1);
+  }
+  .service-card {
+    background: var(--cream);
+    padding: 2.5rem 2rem;
+    transition: background 0.3s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+    transform-origin: left;
+  }
+  .service-card:hover { background: var(--parchment); }
+  .service-card:hover::after { transform: scaleX(1); }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: rgba(184,146,58,0.25);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--bark);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+  .service-desc {
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--stone);
+  }
+
+  /* SPECIALTY */
+  .specialty {
+    background: var(--bark);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 60vh;
+    position: relative;
+    overflow: hidden;
+  }
+  .specialty-visual {
+    position: relative;
+    background: var(--moss);
+    overflow: hidden;
+  }
+  .specialty-visual-inner {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 80%, rgba(90,112,96,0.8) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(184,146,58,0.2) 0%, transparent 50%);
+  }
+  .specialty-icon {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.08;
+  }
+  .specialty-icon svg { width: 18rem; height: 18rem; }
+  .specialty-content {
+    padding: 6rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .specialty-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .specialty-eyebrow::before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: var(--gold-light);
+  }
+  .specialty-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+  .specialty-title em { font-style: italic; color: var(--lichen); }
+  .specialty-body {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: rgba(253,250,245,0.65);
+    margin-bottom: 2.5rem;
+    max-width: 42ch;
+  }
+  .specialty-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(212,168,75,0.4);
+    padding-bottom: 0.35rem;
+    transition: color 0.2s, border-color 0.2s;
+    width: fit-content;
+  }
+  .specialty-link:hover { color: var(--white); border-color: var(--white); }
+
+  /* ABOUT */
+  .about {
+    padding: 8rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 8rem;
+    align-items: center;
+  }
+  .about-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .about-label::before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: var(--gold);
+  }
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--bark);
+    margin-bottom: 2rem;
+  }
+  .about-heading em { font-style: italic; color: var(--moss); }
+  .about-body {
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: var(--stone);
+    margin-bottom: 1.25rem;
+  }
+  .about-portrait-wrap {
+    position: relative;
+  }
+  .about-portrait-bg {
+    position: absolute;
+    inset: 1.5rem -1.5rem -1.5rem 1.5rem;
+    background: var(--parchment);
+    border: 1px solid rgba(58,46,30,0.1);
+  }
+  .about-portrait {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--moss);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .about-portrait-inner {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 40% 30%, rgba(90,112,96,0.7) 0%, var(--moss) 70%);
+  }
+  .portrait-initials {
+    position: relative;
+    z-index: 1;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem;
+    font-weight: 300;
+    color: rgba(253,250,245,0.3);
+    letter-spacing: 0.1em;
+  }
+
+  /* CONTACT */
+  .contact {
+    background: var(--parchment);
+    padding: 8rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+    align-items: start;
+    border-top: 1px solid rgba(58,46,30,0.08);
+  }
+  .contact-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--bark);
+    margin-bottom: 1.5rem;
+  }
+  .contact-heading em { font-style: italic; color: var(--moss); }
+  .contact-sub {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--stone);
+    margin-bottom: 3rem;
+  }
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(58,46,30,0.1);
+  }
+  .contact-item:last-child { border-bottom: none; }
+  .contact-item-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    width: 5rem;
+    flex-shrink: 0;
+    padding-top: 0.15rem;
+  }
+  .contact-item-value {
+    font-size: 0.95rem;
+    color: var(--bark);
+    text-decoration: none;
+    line-height: 1.5;
+    transition: color 0.2s;
+  }
+  a.contact-item-value:hover { color: var(--moss); }
+  .contact-form-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .form-group label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    background: var(--cream);
+    border: 1px solid rgba(58,46,30,0.15);
+    padding: 0.875rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--bark);
+    outline: none;
+    transition: border-color 0.2s;
+    resize: none;
+    appearance: none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus { border-color: var(--moss); }
+  .form-group textarea { min-height: 120px; }
+  .submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--bark);
+    border: none;
+    padding: 1.1rem 2.5rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  .submit-btn:hover { background: var(--moss); transform: translateY(-1px); }
+
+  /* FOOTER */
+  footer {
+    background: var(--bark);
+    padding: 3rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: rgba(253,250,245,0.9);
+  }
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .footer-links a {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(253,250,245,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: rgba(253,250,245,0.8); }
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(253,250,245,0.3);
+  }
+
+  /* ANIMATIONS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.25rem 2rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 8rem 2rem 5rem; }
+    .services { padding: 4rem 2rem 6rem; }
+    .services-header { grid-template-columns: 1fr; gap: 2rem; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .specialty { grid-template-columns: 1fr; }
+    .specialty-visual { min-height: 30vh; }
+    .specialty-content { padding: 4rem 2rem; }
+    .about { padding: 6rem 2rem; grid-template-columns: 1fr; gap: 4rem; }
+    .about-portrait-wrap { max-width: 18rem; margin: 0 auto; }
+    .contact { padding: 6rem 2rem; grid-template-columns: 1fr; gap: 4rem; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+    .section-divider { padding: 0 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="#">J. Piper Consulting</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#specialty">Field Gear</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Project Management &amp; Consulting</p>
+    <h1 class="hero-heading">
+      Thoughtful work.<br>
+      <em>Practical</em><br>
+      results.
+    </h1>
+    <p class="hero-sub">
+      Jennifer Piper brings decades of hands-on experience to planning, administration, evaluation, and grant writing — helping organizations and individuals do meaningful work, well.
+    </p>
+    <a href="#contact" class="hero-cta">
+      Start a conversation
+      <span class="hero-cta-arrow">→</span>
+    </a>
+    <div class="hero-scroll-hint">
+      <div class="hero-scroll-line"></div>
+      Scroll
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-inner"></div>
+    <div class="hero-texture"></div>
+    <div class="hero-right-text">
+      <p class="hero-right-quote">"Thirty years in the field — behind the desk and in the backcountry."</p>
+      <p class="hero-right-attr">Jennifer Piper — Principal</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<div class="section-divider reveal">
+  <span class="divider-label">What I offer</span>
+  <div class="divider-line"></div>
+</div>
+
+<section class="services" id="services">
+  <div class="services-header reveal">
+    <h2 class="services-title">
+      A full range of<br>
+      <em>consulting</em> services
+    </h2>
+    <p class="services-intro">
+      From strategic planning to grant writing, I offer flexible, personalized consulting that meets you where you are — with clear communication and deliverables that actually get used.
+    </p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <h3 class="service-name">Planning</h3>
+      <p class="service-desc">Strategic and operational planning that turns goals into actionable roadmaps — built to last.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <h3 class="service-name">Administration</h3>
+      <p class="service-desc">Organizational and project administration support, keeping the details managed so you can focus on the mission.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <h3 class="service-name">Evaluation</h3>
+      <p class="service-desc">Honest, rigorous program and project evaluation that informs what works and guides what comes next.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <h3 class="service-name">Grant Writing</h3>
+      <p class="service-desc">Compelling grant narratives and applications that connect your work to the funding it deserves.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <h3 class="service-name">Field Gear &amp; Finery</h3>
+      <p class="service-desc">Specialty repair and customization for backcountry and backstage — detailed, expert craftsmanship.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALTY -->
+<section class="specialty" id="specialty">
+  <div class="specialty-visual">
+    <div class="specialty-visual-inner"></div>
+    <div class="specialty-icon">
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="90" stroke="white" stroke-width="1"/>
+        <path d="M60 80 Q80 60 100 80 Q120 100 140 80" stroke="white" stroke-width="1.5" fill="none"/>
+        <path d="M60 100 Q80 80 100 100 Q120 120 140 100" stroke="white" stroke-width="1.5" fill="none"/>
+        <path d="M60 120 Q80 100 100 120 Q120 140 140 120" stroke="white" stroke-width="1.5" fill="none"/>
+        <circle cx="100" cy="100" r="4" fill="white"/>
+        <line x1="100" y1="30" x2="100" y2="170" stroke="white" stroke-width="0.5" opacity="0.3"/>
+        <line x1="30" y1="100" x2="170" y2="100" stroke="white" stroke-width="0.5" opacity="0.3"/>
+      </svg>
+    </div>
+  </div>
+  <div class="specialty-content reveal">
+    <p class="specialty-eyebrow">Specialty service</p>
+    <h2 class="specialty-title">
+      Field Gear<br>
+      &amp; <em>Finery</em>
+    </h2>
+    <p class="specialty-body">
+      Repair and customization work for gear that's been tested by the backcountry — and apparel that needs to perform on stage or off the beaten path. Expert handiwork, honest pricing.
+    </p>
+    <a href="#contact" class="specialty-link">
+      View pricing guide →
+    </a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-portrait-wrap reveal">
+    <div class="about-portrait-bg"></div>
+    <div class="about-portrait">
+      <div class="about-portrait-inner"></div>
+      <div class="portrait-initials">JP</div>
+    </div>
+  </div>
+  <div class="reveal">
+    <p class="about-label">About</p>
+    <h2 class="about-heading">Jennifer Piper,<br><em>Principal</em></h2>
+    <p class="about-body">
+      J. Piper Consulting LLC is a solo practice built on more than thirty years of practical experience in project management, program administration, and organizational consulting.
+    </p>
+    <p class="about-body">
+      Based in upstate New York, Jennifer works with nonprofits, small businesses, and individuals who need a skilled and reliable partner — someone who shows up, does the work, and delivers.
+    </p>
+    <p class="about-body">
+      Her range extends beyond the desk: a longtime backcountry traveler and craftsperson, Jennifer also offers specialty repair and customization services through <em>Field Gear &amp; Finery</em>.
+    </p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="reveal">
+    <h2 class="contact-heading">Let's work<br><em>together</em></h2>
+    <p class="contact-sub">
+      Whether you need a planning partner, a grant writer, or someone to bring a worn-out pack back to life — reach out and let's talk.
+    </p>
+    <div class="contact-details">
+      <div class="contact-item">
+        <span class="contact-item-label">Email</span>
+        <a href="mailto:jennifer@jpiperconsulting.com" class="contact-item-value">jennifer@jpiperconsulting.com</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">Phone</span>
+        <a href="tel:+13152474924" class="contact-item-value">315-247-4924</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">Services</span>
+        <span class="contact-item-value">Planning · Administration<br>Evaluation · Grant Writing<br>Field Gear &amp; Finery Repair</span>
+      </div>
+    </div>
+  </div>
+  <div class="reveal">
+    <div class="contact-form-wrap">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="your@email.com">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="service">Service of interest</label>
+        <select id="service">
+          <option value="">Select a service...</option>
+          <option>Planning</option>
+          <option>Administration</option>
+          <option>Evaluation</option>
+          <option>Grant Writing</option>
+          <option>Field Gear &amp; Finery Repair</option>
+          <option>Other / Not sure yet</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" placeholder="Tell me a little about your project or what you need..."></textarea>
+      </div>
+      <button class="submit-btn" onclick="alert('Form submitted! (Demo only — connect to your backend to enable.)')">
+        Send message →
+      </button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">J. Piper Consulting LLC</div>
+  <ul class="footer-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#specialty">Field Gear</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 J. Piper Consulting LLC</p>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
